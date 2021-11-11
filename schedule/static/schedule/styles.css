@@ -1,0 +1,31 @@
+#timer {
+    position: fixed; 
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+    font-size: 10em;
+}
+
+#activity {
+    position: fixed; 
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+    font-size: 5em;
+}
+
+table {
+    table-layout: fixed;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 98%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 14%;
+    height:2.5em;
+}
+  

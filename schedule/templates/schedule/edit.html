@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <link href="static/schedule/styles.css" rel="stylesheet">
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let events = {{events|safe}};
+                console.log(typeof events)
+                for (let i = 0; i<7; i++){
+                    for (let j = 0; j<events[i].length; j++){
+                        let id = j.toString() +"|"+ i.toString()
+                        let event_char = document.getElementById(id)
+                        event_char.innerHTML = events[i][j]
+                        let b=document.createElement("input")
+                        b.type = "button"
+                        b.value="x"
+                        b.onclick=function() {submitform(i.toString() +"|"+ j.toString())};
+                        b.innerHTML = "x"
+                        event_char.appendChild(b)
+                    }
+                }
+            });
+            function submitform(id) {
+                document.getElementById("h").value = "D"+id.toString();
+                document.getElementById("eventform").submit();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id = "editor"> 
+            <form action="{% url 'edit' %}" method="post" id="eventform">
+                {% csrf_token %}
+                <input type="text" id = "title" name = "title" value="">
+                <select id="days" name="day" form="eventform">
+                    <option value="" selected disabled hidden>Select Day</option>
+                    {% for d in days %}
+                        <option value = "{{d}}" default> {{d}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" value = "default value"  id = "h" name="h">
+                <input type = "time" id = "stime" name = "stime">
+                <input type = "time" id = "etime" name = "etime">
+                <input type="submit" id = "submit_edit" name = "se" value="Edit">
+            </form>
+
+
+        </div>
+        <div>{{message}}</div>
+        <table>
+        {% for i in days %}
+            <th> {{i}} </th>
+        {%endfor%}
+        {%for i in max %}
+        <tr id="{{i}}">
+            {% for j in '0123456'|make_list %}
+                <td id="{{i}}|{{j}}"></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+        </table>
+    </body>
+
+</html>
